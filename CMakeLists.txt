@@ -1,11 +1,11 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.11)
 
 # Project Name and start working in project scope (some things just work until now, some just work after this command)
 project(SOIL2)
 
-# Add conan dependencies (our c++ dependency manager)
-#include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-#conan_basic_setup(TARGETS)
+# Add Conan dependencies (our C++ dependency manager)
+# include(conanbuildinfo.cmake)
+# conan_basic_setup()
 
 
 # Error if paths aren't set well
@@ -15,9 +15,8 @@ if(${MAINDIR} STREQUAL ${BINDIR})
     message(FATAL_ERROR "Keep your directories clean, don't generate the project-files in the main directory! ${MAINDIR} ${BINDIR}")
 endif()
 
-set(sources "src/SOIL2/etc1_utils.c"
-            "src/SOIL2/image_DXT.c"
-            "src/SOIL2/image_helper.c"
-            "src/SOIL2/SOIL2.c")
+set(sources "source_subfolder/src/SOIL2/etc1_utils.c"
+            "source_subfolder/src/SOIL2/image_DXT.c"
+            "source_subfolder/src/SOIL2/image_helper.c"
+            "source_subfolder/src/SOIL2/SOIL2.c")
 add_library(SOIL2 ${sources})
-

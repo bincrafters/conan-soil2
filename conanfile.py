@@ -1,6 +1,5 @@
-from conans import ConanFile, CMake
-from conans.tools import download, unzip
-import shutil
+from conans import ConanFile, CMake, tools
+import os
 
 
 class SOIL2Conan(ConanFile):
@@ -8,35 +7,33 @@ class SOIL2Conan(ConanFile):
     version = "387a4b1269e6"
     license = "Public Domain"
     settings = "os", "arch", "compiler", "build_type"
-    generators = "cmake"
     url = "https://github.com/inexorgame/conan-soil2"
-    build_policy = "missing"
-    folder_name = "SpartanJ-soil2-{}".format(version)
-    exports = "CMakeLists.txt"
+    homepage = "https://bitbucket.org/SpartanJ/soil2"
+    author = "Inexor <info@inexor.org>"
+    exports = ["LICENSE.md"]
+    exports_sources = ["CMakeLists.txt"]
+    generators = "cmake"
+    source_subfolder = "source_subfolder"
+    build_subfolder = "build_subfolder"
 
 #    def config_options(self):
  #       del self.settings.compiler.libcxx
 
     def source(self):
-        # Download SOIL2
-        zip_name = "default.tar.gz"
-        download("https://bitbucket.org/SpartanJ/soil2/get/387a4b1269e6.tar.gz", zip_name)
-        unzip(zip_name)
-        # Copy CMakelists.txt
-        shutil.move("CMakeLists.txt", "%s/CMakeLists.txt" % self.folder_name)
-
+        archive_url = "https://bitbucket.org/SpartanJ/soil2/get/{}.tar.gz".format(self.version)
+        tools.get(archive_url, sha256="69e37f9c9f335a4cc2a546537dee5d556fc3fe97b185a914b0e63f90427b5353")
+        extracted_dir = "SpartanJ-soil2-" + self.version
+        os.rename(extracted_dir, self.source_subfolder)
 
     def build(self):
         cmake = CMake(self)
-        self.run("cmake {} {}".format(self.folder_name, cmake.command_line))
-        self.run("cmake --build . {}".format(cmake.build_config))
+        cmake.configure(build_folder=self.build_subfolder)
+        cmake.build()
 
     def package(self):
-        self.copy("*.h", dst="include/SOIL2", src="{}/src/SOIL2/".format(self.folder_name))
+        self.copy("*.h", dst="include/SOIL2", src="{}/src/SOIL2/".format(self.source_subfolder))
         self.copy(pattern="*.lib", dst="lib", keep_path=False)
         self.copy(pattern="*.a", dst="lib", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.includedirs = ['include']
         self.cpp_info.libs = ["SOIL2"]
-
