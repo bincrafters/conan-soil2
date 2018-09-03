@@ -2,8 +2,8 @@ from conans import ConanFile, CMake, tools
 import os
 
 
-class SOIL2Conan(ConanFile):
-    name = "SOIL2"
+class soil2Conan(ConanFile):
+    name = "soil2"
     version = "387a4b1269e6"
     license = "Public Domain"
     settings = "os", "arch", "compiler", "build_type"
