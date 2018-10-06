@@ -2,6 +2,7 @@ The MIT License (MIT)
 
 Copyright (c) 2018 Malte Haase
 Copyright (c) 2018 Michael "Croydon" Keck
+Copyright (c) 2018 Bincrafters
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

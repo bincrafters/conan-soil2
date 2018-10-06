@@ -5,11 +5,12 @@ import os
 class soil2Conan(ConanFile):
     name = "soil2"
     version = "387a4b1269e6"
-    license = "Public Domain"
-    settings = "os", "arch", "compiler", "build_type"
-    url = "https://github.com/inexorgame/conan-soil2"
+    description = "Simple OpenGL Image Library 2"
+    url = "https://github.com/bincrafters/conan-soil2"
     homepage = "https://bitbucket.org/SpartanJ/soil2"
     author = "Inexor <info@inexor.org>"
+    license = "Public Domain"
+    settings = "os", "arch", "compiler", "build_type"
     exports = ["LICENSE.md"]
     exports_sources = ["CMakeLists.txt"]
     generators = "cmake"
