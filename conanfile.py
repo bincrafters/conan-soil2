@@ -12,8 +12,6 @@ class soil2Conan(ConanFile):
     author = "Inexor <info@inexor.org>"
     license = "Public Domain"
     settings = "os", "arch", "compiler", "build_type"
-    options = {"shared": [True, False]}
-    default_options = {"shared": False}
     exports = ["LICENSE.md"]
     exports_sources = ["CMakeLists.txt"]
     _source_subfolder = "source_subfolder"
