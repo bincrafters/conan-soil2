@@ -1,4 +1,4 @@
-from conans import ConanFile, tools, AutoToolsBuildEnvironment, CMake ## MSBuild
+from conans import ConanFile, tools, AutoToolsBuildEnvironment
 import os
 
 
