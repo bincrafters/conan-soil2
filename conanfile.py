@@ -4,7 +4,7 @@ import os
 
 class soil2Conan(ConanFile):
     name = "soil2"
-    version = "387a4b1269e6"
+    version = "1.11"
     description = "Simple OpenGL Image Library 2"
     topics = ("conan", "soil2", "opengl", "images")
     url = "https://github.com/bincrafters/conan-soil2"
@@ -24,9 +24,9 @@ class soil2Conan(ConanFile):
  #       del self.settings.compiler.libcxx
 
     def source(self):
-        archive_url = "https://bitbucket.org/SpartanJ/soil2/get/{}.tar.gz".format(self.version)
-        tools.get(archive_url, sha256="69e37f9c9f335a4cc2a546537dee5d556fc3fe97b185a914b0e63f90427b5353")
-        extracted_dir = "SpartanJ-soil2-" + self.version
+        archive_url = "https://bitbucket.org/SpartanJ/soil2/get/release-{}.tar.bz2".format(self.version)
+        tools.get(archive_url, sha256="c6d729b0fb74540b40d461ed3520e507418b121ed81eed7b19569bfc02d7c5d0")
+        extracted_dir = "SpartanJ-soil2-9e6974409740"
         os.rename(extracted_dir, self._source_subfolder)
 
     def system_requirements(self):
