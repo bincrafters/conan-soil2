@@ -62,7 +62,8 @@ class soil2Conan(ConanFile):
                 raise Exception("TODO")
             else:
                 self.run("premake4 gmake")
-                with tools.chdir(os.path.join("make", "macosx")):
+                platform = "macosx" if self.settings.os == "Macos" else "linux"
+                with tools.chdir(os.path.join("make", platform)):
                     env_build = AutoToolsBuildEnvironment(self)
                     env_build.make(args=["soil2-static-lib", "config=%s" % config])
 
