@@ -9,6 +9,7 @@ import os
 class TestPackageConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
+    requires = "glfw/3.3@bincrafters/stable"
 
     def build(self):
         cmake = CMake(self)
@@ -17,4 +18,5 @@ class TestPackageConan(ConanFile):
 
     def test(self):
         bin_path = os.path.join("bin", "test_package")
-        self.run(bin_path, run_environment=True)
+        img_path = os.path.join(self.source_folder, "img_test.png")
+        self.run("%s %s" % (bin_path, img_path), run_environment=True)
