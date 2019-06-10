@@ -1,4 +1,4 @@
-from conans import ConanFile, tools, CMake ## MSBuild
+from conans import ConanFile, tools, AutoToolsBuildEnvironment, CMake ## MSBuild
 import os
 
 
@@ -13,15 +13,17 @@ class soil2Conan(ConanFile):
     license = "Unlicense"  # Public Domain
     settings = "os", "arch", "compiler", "build_type"
     exports = ["LICENSE.md"]
-    exports_sources = ["CMakeLists.txt"]
     _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
-    generators = "cmake"
-    # build_requires = "premake_installer/4.3@bincrafters/stable"
+    generators = "premake"
 
-# SOIL2 seems to be C only mainly, but for some reason the premake file has a is_vs() -> language C++ switch, why?
-#    def config_options(self):
- #       del self.settings.compiler.libcxx
+    def config_options(self):
+        # Visual Studio users: SOIL2 will need to be compiled as C++ source ( at least the file etc1_utils.c ), since VC compiler doesn't support C99
+        del self.settings.compiler.libcxx
+
+    def build_requirements(self):
+        if not tools.which("premake"):
+            self.build_requires("premake_installer/4.4-beta5@bincrafters/stable")
 
     def source(self):
         archive_url = "https://bitbucket.org/SpartanJ/soil2/get/release-{}.tar.bz2".format(self.version)
@@ -54,15 +56,15 @@ class soil2Conan(ConanFile):
                 installer.install(package)
 
     def build(self):
-        cmake = CMake(self)
-        cmake.configure(build_folder=self._build_subfolder)
-        cmake.build()
-        # self.output.info("premake4 vs2013 --os=windows --file={}".format(os.path.join(self._source_subfolder, "premake4.lua")))
-        # self.run("premake4 --help")
-        # if self.settings.os == "Windows":
-            # self.run("premake4 vs2010 --os=windows", cwd=self._source_subfolder)
-            # msbuild = MSBuild(self)
-            # msbuild.build("{}/make/windows/SOIL2.sln".format(self._source_subfolder), upgrade_project=True, arch="Win32", targets="soil2-static-lib")
+        config = "debug" if self.settings.build_type == "Debug" else "release"
+        with tools.chdir(self._source_subfolder):
+            if self.settings.compiler == "Visual Studio":
+                raise Exception("TODO")
+            else:
+                self.run("premake4 gmake")
+                with tools.chdir(os.path.join("make", "macosx")):
+                    env_build = AutoToolsBuildEnvironment(self)
+                    env_build.make(args=["soil2-static-lib", "config=%s" % config])
 
     def package(self):
         self.copy("*.h", dst="include/SOIL2", src="{}/src/SOIL2/".format(self._source_subfolder))
@@ -70,10 +72,14 @@ class soil2Conan(ConanFile):
         self.copy(pattern="*.a", dst="lib", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libs = ["SOIL2"]
+        self.cpp_info.libs = ["soil2-debug" if self.settings.build_type == "Debug" else "soil2"]
         if self.settings.os == "Windows":
-            self.cpp_info.libs.append("glu32")
-            self.cpp_info.libs.append("opengl32")
-        if self.settings.os == "Linux":
-            self.cpp_info.libs.append("GLU")
-            self.cpp_info.libs.append("GL")
+            self.cpp_info.libs.extend(["glu32", "opengl32"])
+        elif self.settings.os == "Linux":
+            self.cpp_info.libs.extend(["GLU", "GL"])
+        elif self.settings.os == "Macos":
+            frameworks = ["OpenGL", "CoreFoundation"]
+            for framework in frameworks:
+                self.cpp_info.exelinkflags.append("-framework %s" % framework)
+            self.cpp_info.sharedlinkflags = self.cpp_info.exelinkflags
+
