@@ -10,7 +10,7 @@ class soil2Conan(ConanFile):
     url = "https://github.com/bincrafters/conan-soil2"
     homepage = "https://bitbucket.org/SpartanJ/soil2"
     author = "Inexor <info@inexor.org>"
-    license = "Public Domain"
+    license = "Unlicense"  # Public Domain
     settings = "os", "arch", "compiler", "build_type"
     exports = ["LICENSE.md"]
     exports_sources = ["CMakeLists.txt"]
