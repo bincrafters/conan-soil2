@@ -60,13 +60,13 @@ class soil2Conan(ConanFile):
         platform = "x32" if self.settings.arch == "x86" else "x64"
         with tools.chdir(self._source_subfolder):
             if self.settings.compiler == "Visual Studio":
-                self.run("premake4 vs2010 --os=windows --platform=%s" % platform)
+                self.run("premake4 --os=windows --platform=%s vs2010" % platform)
                 with tools.chdir(os.path.join("make", "windows")):
                     msbuild = MSBuild(self)
                     msbuild.build("SOIL2.sln", targets=["soil2-static-lib"], platforms={"x86":"Win32"})
             else:
                 the_os = "macosx" if self.settings.os == "Macos" else "linux"
-                self.run("premake4 gmake --os=%s --platform=%s" % (the_os, platform))
+                self.run("premake4 --os=%s --platform=%s gmake" % (the_os, platform))
                 with tools.chdir(os.path.join("make", the_os)):
                     env_build = AutoToolsBuildEnvironment(self)
                     env_build.make(args=["soil2-static-lib", "config=%s" % config])
