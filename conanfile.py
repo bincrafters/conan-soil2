@@ -62,7 +62,7 @@ class soil2Conan(ConanFile):
                 self.run("premake4 vs2010 --os=windows")
                 with tools.chdir(os.path.join("make", "windows")):
                     msbuild = MSBuild(self)
-                    msbuild.build("SOIL2.sln", targets=["soil2-static-lib"])
+                    msbuild.build("SOIL2.sln", targets=["soil2-static-lib"], platforms={"x86":"Win32"})
             else:
                 platform = "macosx" if self.settings.os == "Macos" else "linux"
                 self.run("premake4 gmake --os=%s" % platform)
