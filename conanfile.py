@@ -59,7 +59,7 @@ class soil2Conan(ConanFile):
         config = "debug" if self.settings.build_type == "Debug" else "release"
         with tools.chdir(self._source_subfolder):
             if self.settings.compiler == "Visual Studio":
-                self.run("premake4 vs2013 --os=windows")
+                self.run("premake4 vs2010 --os=windows")
                 with tools.chdir(os.path.join("make", "windows")):
                     msbuild = MSBuild(self)
                     msbuild.build("SOIL2.sln", targets=["soil2-static-lib"])
