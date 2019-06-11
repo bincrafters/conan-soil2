@@ -1,3 +1,6 @@
+env:
+   global:
+      - CONAN_DOCKER_RUN_OPTIONS: "-e TRAVIS=true"
 linux: &linux
    os: linux
    dist: xenial
