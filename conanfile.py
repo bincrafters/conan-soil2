@@ -59,13 +59,13 @@ class soil2Conan(ConanFile):
         config = "debug" if self.settings.build_type == "Debug" else "release"
         with tools.chdir(self._source_subfolder):
             if self.settings.compiler == "Visual Studio":
-                self.run("premake4 vs2017")
+                self.run("premake4 vs2013 --os=windows")
                 with tools.chdir(os.path.join("make", "windows")):
                     msbuild = MSBuild(self)
                     msbuild.build("SOIL2.sln", targets=["soil2-static-lib"])
             else:
-                self.run("premake4 gmake")
                 platform = "macosx" if self.settings.os == "Macos" else "linux"
+                self.run("premake4 gmake --os=%s" % platform)
                 with tools.chdir(os.path.join("make", platform)):
                     env_build = AutoToolsBuildEnvironment(self)
                     env_build.make(args=["soil2-static-lib", "config=%s" % config])
