@@ -20,6 +20,7 @@ class soil2Conan(ConanFile):
     def config_options(self):
         # Visual Studio users: SOIL2 will need to be compiled as C++ source ( at least the file etc1_utils.c ), since VC compiler doesn't support C99
         del self.settings.compiler.libcxx
+        del self.settings.compiler.cppstd
 
     def build_requirements(self):
         if not tools.which("premake"):
