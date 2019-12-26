@@ -25,6 +25,10 @@ class soil2Conan(ConanFile):
     def build_requirements(self):
         if not tools.which("premake"):
             self.build_requires("premake_installer/4.4-beta5@bincrafters/stable")
+    
+    def requirements(self):
+        if self.settings.os == "Linux" and tools.os_info.is_linux:
+            self.requires('mesa/19.3.1@bincrafters/stable')
 
     def source(self):
         archive_url = "https://bitbucket.org/SpartanJ/soil2/get/release-{}.tar.bz2".format(self.version)
@@ -35,26 +39,6 @@ class soil2Conan(ConanFile):
     def system_requirements(self):
         if self.settings.os == "Macos":
             self.run("brew cask install xquartz")
-
-        if self.settings.os == "Linux" and tools.os_info.is_linux:
-            installer = tools.SystemPackageTool()
-            if tools.os_info.with_apt:
-                if self.settings.arch == "x86":
-                    arch_suffix = ':i386'
-                elif self.settings.arch == "x86_64":
-                    arch_suffix = ':amd64'
-                packages = ['libgl1-mesa-dev%s' % arch_suffix]
-
-            if tools.os_info.with_yum:
-                if self.settings.arch == "x86":
-                    arch_suffix = '.i686'
-                elif self.settings.arch == 'x86_64':
-                    arch_suffix = '.x86_64'
-                packages = ['mesa-libGL-devel%s' % arch_suffix]
-
-
-            for package in packages:
-                installer.install(package)
 
     def build(self):
         config = "debug" if self.settings.build_type == "Debug" else "release"
@@ -81,8 +65,6 @@ class soil2Conan(ConanFile):
         self.cpp_info.libs = ["soil2-debug" if self.settings.build_type == "Debug" else "soil2"]
         if self.settings.os == "Windows":
             self.cpp_info.libs.extend(["glu32", "opengl32"])
-        elif self.settings.os == "Linux":
-            self.cpp_info.libs.extend(["GLU", "GL"])
         elif self.settings.os == "Macos":
             frameworks = ["OpenGL", "CoreFoundation"]
             for framework in frameworks:
