@@ -10,7 +10,7 @@ int main(int argc, char * argv[])
         return EXIT_FAILURE;
     }
     const char * glfwError = NULL;
-    bool under_ci = (std::getenv("TRAVIS") != NULL) || (std::getenv("APPVEYOR") != NULL);
+    bool under_ci = (std::getenv("CI") != NULL);
     if (glfwInit() == GLFW_FALSE)
     {
 	    glfwGetError(&glfwError);
