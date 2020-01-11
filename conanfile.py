@@ -8,7 +8,7 @@ class soil2Conan(ConanFile):
     description = "Simple OpenGL Image Library 2"
     topics = ("conan", "soil2", "opengl", "images")
     url = "https://github.com/bincrafters/conan-soil2"
-    homepage = "https://bitbucket.org/SpartanJ/soil2"
+    homepage = "https://github.com/SpartanJ/SOIL2"
     author = "Inexor <info@inexor.org>"
     license = "Unlicense"  # Public Domain
     settings = "os", "arch", "compiler", "build_type"
