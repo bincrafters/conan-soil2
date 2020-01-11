@@ -15,6 +15,7 @@ class soil2Conan(ConanFile):
     _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
     generators = "premake"
+    exports_sources = ["premake5.lua"]
 
     def config_options(self):
         # Visual Studio users: SOIL2 will need to be compiled as C++ source ( at least the file etc1_utils.c ), since VC compiler doesn't support C99
@@ -23,7 +24,7 @@ class soil2Conan(ConanFile):
 
     def build_requirements(self):
         if not tools.which("premake"):
-            self.build_requires("premake_installer/4.4-beta5@bincrafters/stable")
+            self.build_requires("premake_installer/5.0.0-alpha14@bincrafters/stable")
     
     def requirements(self):
         if self.settings.os == "Linux" and tools.os_info.is_linux:
@@ -34,6 +35,9 @@ class soil2Conan(ConanFile):
         tools.get(archive_url, sha256="104a2de5bb74b58b7b7cda7592b174d9aa0585eeb73d0bec4901f419321358bc")
         extracted_dir = "SOIL2-release-" + self.version 
         os.rename(extracted_dir, self._source_subfolder)
+        # This is the upstream premake5.lua file which will be included in  a 1.11+ release
+        # With additional support for 64bit via "platforms { .. } and filters .. architecture .."
+        os.rename("premake5.lua", os.path.join(self._source_subfolder, "premake5.lua"))
 
     def system_requirements(self):
         if self.settings.os == "Macos":
@@ -44,13 +48,13 @@ class soil2Conan(ConanFile):
         platform = "x32" if self.settings.arch == "x86" else "x64"
         with tools.chdir(self._source_subfolder):
             if self.settings.compiler == "Visual Studio":
-                self.run("premake4 --os=windows --platform=%s vs2010" % platform)
+                self.run("premake5 --os=windows vs2015")
                 with tools.chdir(os.path.join("make", "windows")):
                     msbuild = MSBuild(self)
                     msbuild.build("SOIL2.sln", targets=["soil2-static-lib"], platforms={"x86":"Win32"})
             else:
                 the_os = "macosx" if self.settings.os == "Macos" else "linux"
-                self.run("premake4 --os=%s --platform=%s gmake" % (the_os, platform))
+                self.run("premake5 --os=%s --platform=%s gmake").format(the_os)
                 with tools.chdir(os.path.join("make", the_os)):
                     env_build = AutoToolsBuildEnvironment(self)
                     env_build.make(args=["soil2-static-lib", "config=%s" % config])
