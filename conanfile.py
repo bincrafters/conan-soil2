@@ -12,7 +12,6 @@ class soil2Conan(ConanFile):
     author = "Inexor <info@inexor.org>"
     license = "Unlicense"  # Public Domain
     settings = "os", "arch", "compiler", "build_type"
-    exports = ["LICENSE.md"]
     _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
     generators = "premake"
@@ -28,12 +27,12 @@ class soil2Conan(ConanFile):
     
     def requirements(self):
         if self.settings.os == "Linux" and tools.os_info.is_linux:
-            self.requires('mesa/19.3.1@bincrafters/stable')
+            self.requires("mesa/19.3.1@bincrafters/stable")
 
     def source(self):
-        archive_url = "https://bitbucket.org/SpartanJ/soil2/get/release-{}.tar.bz2".format(self.version)
-        tools.get(archive_url, sha256="c6d729b0fb74540b40d461ed3520e507418b121ed81eed7b19569bfc02d7c5d0")
-        extracted_dir = "SpartanJ-soil2-9e6974409740"
+        archive_url = "https://github.com/SpartanJ/SOIL2/archive/release-{}.tar.gz".format(self.version)
+        tools.get(archive_url, sha256="104a2de5bb74b58b7b7cda7592b174d9aa0585eeb73d0bec4901f419321358bc")
+        extracted_dir = "SOIL2-release-" + self.version 
         os.rename(extracted_dir, self._source_subfolder)
 
     def system_requirements(self):
@@ -64,10 +63,6 @@ class soil2Conan(ConanFile):
     def package_info(self):
         self.cpp_info.libs = ["soil2-debug" if self.settings.build_type == "Debug" else "soil2"]
         if self.settings.os == "Windows":
-            self.cpp_info.libs.extend(["glu32", "opengl32"])
+            self.cpp_info.system_libs.extend(["glu32", "opengl32"])
         elif self.settings.os == "Macos":
-            frameworks = ["OpenGL", "CoreFoundation"]
-            for framework in frameworks:
-                self.cpp_info.exelinkflags.append("-framework %s" % framework)
-            self.cpp_info.sharedlinkflags = self.cpp_info.exelinkflags
-
+            self.cpp_info.frameworks.extend(["OpenGL", "CoreFoundation"])
