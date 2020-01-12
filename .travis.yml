@@ -1,6 +1,6 @@
 env:
    global:
-      - CONAN_DOCKER_RUN_OPTIONS="-e TRAVIS=true"
+      - CONAN_DOCKER_RUN_OPTIONS="-e CI=true"
 linux: &linux
    os: linux
    dist: bionic
