@@ -72,9 +72,9 @@ class soil2Conan(ConanFile):
     def package_info(self):
         self.cpp_info.libs = ["soil2-debug" if self.settings.build_type == "Debug" else "soil2"]
         if self.settings.os == "Windows":
-            self.cpp_info.libs.extend(["glu32", "opengl32"])
+            self.cpp_info.system_libs.extend(["opengl32"])
         elif self.settings.os == "Linux":
-            self.cpp_info.libs.extend(["GLU", "GL"])
+            self.cpp_info.system_libs.extend(["GL"])
         elif self.settings.os == "Macos":
             frameworks = ["OpenGL", "CoreFoundation"]
             for framework in frameworks:
