@@ -37,19 +37,12 @@ class soil2Conan(ConanFile):
 
         if self.settings.os == "Linux" and tools.os_info.is_linux:
             installer = tools.SystemPackageTool()
+            packages = []
             if tools.os_info.with_apt:
-                if self.settings.arch == "x86":
-                    arch_suffix = ':i386'
-                elif self.settings.arch == "x86_64":
-                    arch_suffix = ':amd64'
-                packages = ['libgl1-mesa-dev%s' % arch_suffix]
+                packages = ['libgl1-mesa-dev']
 
             if tools.os_info.with_yum:
-                if self.settings.arch == "x86":
-                    arch_suffix = '.i686'
-                elif self.settings.arch == 'x86_64':
-                    arch_suffix = '.x86_64'
-                packages = ['mesa-libGL-devel%s' % arch_suffix]
+                packages = ['mesa-libGL-devel']
 
 
             for package in packages:
