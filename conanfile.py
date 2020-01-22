@@ -24,7 +24,7 @@ class soil2Conan(ConanFile):
 
     def build_requirements(self):
         if not tools.which("premake"):
-            self.build_requires("premake_installer/5.0.0-alpha14@bincrafters/stable")
+            self.build_requires("premake/5.0.0-alpha14")
     
     def requirements(self):
         if self.settings.os == "Linux" and tools.os_info.is_linux:
