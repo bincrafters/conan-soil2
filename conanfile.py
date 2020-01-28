@@ -33,7 +33,7 @@ class soil2Conan(ConanFile):
     def source(self):
         archive_url = "https://github.com/SpartanJ/SOIL2/archive/release-{}.tar.gz".format(self.version)
         tools.get(archive_url, sha256="104a2de5bb74b58b7b7cda7592b174d9aa0585eeb73d0bec4901f419321358bc")
-        extracted_dir = "SOIL2-release-" + self.version 
+        extracted_dir = "SOIL2-release-" + self.version
         os.rename(extracted_dir, self._source_subfolder)
         # This is the upstream premake5.lua file which will be included in  a 1.11+ release
         # With additional support for 64bit via "platforms { .. } and filters .. architecture .."
