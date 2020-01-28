@@ -26,9 +26,9 @@ class soil2Conan(ConanFile):
             self.build_requires("premake_installer/4.4-beta5@bincrafters/stable")
 
     def source(self):
-        archive_url = "https://bitbucket.org/SpartanJ/soil2/get/release-{}.tar.bz2".format(self.version)
-        tools.get(archive_url, sha256="c6d729b0fb74540b40d461ed3520e507418b121ed81eed7b19569bfc02d7c5d0")
-        extracted_dir = "SpartanJ-soil2-9e6974409740"
+        archive_url = "https://github.com/SpartanJ/SOIL2/archive/release-{}.tar.gz".format(self.version)
+        tools.get(archive_url, sha256="104a2de5bb74b58b7b7cda7592b174d9aa0585eeb73d0bec4901f419321358bc")
+        extracted_dir = "SOIL2-release-" + self.version
         os.rename(extracted_dir, self._source_subfolder)
 
     def system_requirements(self):
@@ -80,4 +80,3 @@ class soil2Conan(ConanFile):
             for framework in frameworks:
                 self.cpp_info.exelinkflags.append("-framework %s" % framework)
             self.cpp_info.sharedlinkflags = self.cpp_info.exelinkflags
-
