@@ -45,7 +45,7 @@ function get_backend_link_name( name )
 end
 
 remote_sdl2_version = "SDL2-2.0.10"
-remote_sdl2_devel_vc_url = "https://www.libsdl.org/Release/SDL2-devel-2.0.10-VC.zip"
+remote_sdl2_devel_vc_url = "https://www.libsdl.org/release/SDL2-devel-2.0.10-VC.zip"
 
 function download_and_extract_dependencies()
 	if _OPTIONS["windows-vc-build"] and not os.isdir("./" .. remote_sdl2_version) then
@@ -97,7 +97,7 @@ workspace "SOIL2"
 			buildoptions { "-Wall" }
 
 		filter "configurations:Debug"
-			defines { "NDEBUG" }
+			defines { "DEBUG" }
 			symbols "On"
 			targetname "soil2-debug"
 
@@ -146,7 +146,7 @@ workspace "SOIL2"
 			buildoptions { "-Wall" }
 
 		filter "configurations:Debug"
-			defines { "NDEBUG" }
+			defines { "DEBUG" }
 			symbols "On"
 			targetname "soil2-debug"
 
@@ -190,7 +190,7 @@ workspace "SOIL2"
 			buildoptions { "-Wall" }
 
 		filter "configurations:Debug"
-			defines { "debug" }
+			defines { "DEBUG" }
 			symbols "On"
 			targetname "soil2-test-debug"
 
