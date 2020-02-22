@@ -71,16 +71,16 @@ end
 workspace "SOIL2"
 	location("./make/" .. os.target() .. "/")
 	targetdir("./bin")
-	configurations { "Debug", "Release" }
-	platforms { "x32", "x64" }
+	configurations { "debug", "release" }
+	platforms { "x86", "x86_64" }
 	download_and_extract_dependencies()
 	objdir("obj/" .. os.target() .. "/")
 
-	filter "platforms:x32"
-		architecture "x32"
+	filter "platforms:x86"
+		architecture "x86"
 
-	filter "platforms:x64"
-		architecture "x64"
+	filter "platforms:x86_64"
+		architecture "x86_64"
 
 	project "soil2-static-lib"
 		kind "StaticLib"
@@ -96,12 +96,12 @@ workspace "SOIL2"
 			language "C"
 			buildoptions { "-Wall" }
 
-		filter "configurations:Debug"
+		filter "configurations:debug"
 			defines { "DEBUG" }
 			symbols "On"
 			targetname "soil2-debug"
 
-		filter "configurations:Release"
+		filter "configurations:release"
 			defines { "NDEBUG" }
 			optimize "On"
 			targetname "soil2"
@@ -145,12 +145,12 @@ workspace "SOIL2"
 			language "C"
 			buildoptions { "-Wall" }
 
-		filter "configurations:Debug"
+		filter "configurations:debug"
 			defines { "DEBUG" }
 			symbols "On"
 			targetname "soil2-debug"
 
-		filter "configurations:Release"
+		filter "configurations:release"
 			defines { "NDEBUG" }
 			optimize "On"
 			targetname "soil2"
@@ -189,12 +189,12 @@ workspace "SOIL2"
 		filter "action:not vs*"
 			buildoptions { "-Wall" }
 
-		filter "configurations:Debug"
+		filter "configurations:debug"
 			defines { "DEBUG" }
 			symbols "On"
 			targetname "soil2-test-debug"
 
-		filter "configurations:Release"
+		filter "configurations:release"
 			defines { "NDEBUG" }
 			optimize "On"
 			targetname "soil2-test-release"
@@ -237,12 +237,12 @@ workspace "SOIL2"
 		filter "action:not vs*"
 			buildoptions { "-Wall" }
 
-		filter "configurations:Debug"
+		filter "configurations:debug"
 			defines { "DEBUG" }
 			symbols "On"
 			targetname "soil2-perf-test-debug"
 
-		filter "configurations:Release"
+		filter "configurations:release"
 			defines { "NDEBUG" }
 			optimize "On"
 			targetname "soil2-perf-test-release"

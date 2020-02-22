@@ -31,8 +31,7 @@ class soil2Conan(ConanFile):
             self.requires("mesa/19.3.1@bincrafters/stable")
 
     def source(self):
-        archive_url = "https://github.com/SpartanJ/SOIL2/archive/release-{}.tar.gz".format(self.version)
-        tools.get(archive_url, sha256="104a2de5bb74b58b7b7cda7592b174d9aa0585eeb73d0bec4901f419321358bc")
+        tools.get(**self.conan_data["sources"][self.version])
         extracted_dir = "SOIL2-release-" + self.version
         os.rename(extracted_dir, self._source_subfolder)
         # This is the upstream premake5.lua file which will be included in  a 1.11+ release
@@ -50,8 +49,12 @@ class soil2Conan(ConanFile):
             if self.settings.compiler == "Visual Studio":
                 self.run("premake5 --os=windows vs2015")
                 with tools.chdir(os.path.join("make", "windows")):
+                    build_type = "release"
+                    if self.settings.build_type == "Debug":
+                        build_type = "debug"
+
                     msbuild = MSBuild(self)
-                    msbuild.build("SOIL2.sln", targets=["soil2-static-lib"], platforms={"x86":"Win32"})
+                    msbuild.build("SOIL2.sln", targets=["soil2-static-lib"], platforms={"x86": "Win32"}, build_type=build_type)
             else:
                 the_os = "macosx" if self.settings.os == "Macos" else "linux"
                 self.run("premake5 --os={} gmake".format(the_os))
