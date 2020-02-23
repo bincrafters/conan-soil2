@@ -34,7 +34,6 @@ class soil2Conan(ConanFile):
         extracted_dir = "SOIL2-release-" + self.version
         os.rename(extracted_dir, self._source_subfolder)
         # This is the upstream premake5.lua file which will be included in  a 1.11+ release
-        # With additional support for 64bit via "platforms { .. } and filters .. architecture .."
         os.rename("premake5.lua", os.path.join(self._source_subfolder, "premake5.lua"))
 
     def system_requirements(self):
