@@ -43,7 +43,7 @@ class soil2Conan(ConanFile):
 
     def build(self):
         config = "debug" if self.settings.build_type == "Debug" else "release"
-        architecture = "x32" if self.settings.arch == "x86" else "x64"
+        architecture = "x86" if self.settings.arch == "x86" else "x86_64"
         with tools.chdir(self._source_subfolder):
             if self.settings.compiler == "Visual Studio":
                 self.run("premake5 --os=windows vs2015")
