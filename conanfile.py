@@ -4,7 +4,6 @@ import os
 
 class soil2Conan(ConanFile):
     name = "soil2"
-    version = "1.11"
     description = "Simple OpenGL Image Library 2"
     topics = ("conan", "soil2", "opengl", "images")
     url = "https://github.com/bincrafters/conan-soil2"
