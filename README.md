@@ -1,57 +1,42 @@
-[![Download](https://api.bintray.com/packages/bincrafters/public-conan/soil2%3Abincrafters/images/download.svg) ](https://bintray.com/bincrafters/public-conan/soil2%3Abincrafters/_latestVersion)
+## Package Status
 
-[Conan.io](https://conan.io) package recipe for [*soil2*](https://bitbucket.org/SpartanJ/soil2).
+| Bintray | Windows | Linux & macOS |
+|:--------:|:---------:|:-----------------:|
+|[![Download](https://api.bintray.com/packages/bincrafters/public-conan/soil2%3Abincrafters/images/download.svg) ](https://bintray.com/bincrafters/public-conan/soil2%3Abincrafters/_latestVersion)|[![Build status](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-soil2?svg=true)](https://ci.appveyor.com/project/bincrafters/conan-soil2)|[![Build Status](https://travis-ci.com/bincrafters/conan-soil2.svg)](https://travis-ci.com/bincrafters/conan-soil2)|
 
+## Conan Information
 
+Bincrafters packages can be found in the following public Conan repository:
 
-The packages generated with this **conanfile** can be found on [Bintray](https://bintray.com/bincrafters/public-conan/soil2%3Abincrafters).
+[Bincrafters Public Conan Repository on Bintray](https://bintray.com/bincrafters/public-conan)
 
-## For Users: Use this package
-
-### Basic setup
-
-    $ conan install soil2/1.11@bincrafters/stable
-
-### Project setup
-
-If you handle multiple dependencies in your project is better to add a *conanfile.txt*
-
-    [requires]
-    soil2/1.11@bincrafters/stable
-
-    [generators]
-    cmake
-
-Complete the installation of requirements for your project running:
-
-    $ mkdir build && cd build && conan install ..
-
-Note: It is recommended that you run conan install from a build directory and not the root of the project directory.  This is because conan generates *conanbuildinfo* files specific to a single build configuration which by default comes from an autodetected default profile located in ~/.conan/profiles/default .  If you pass different build configuration options to conan install, it will generate different *conanbuildinfo* files.  Thus, they should not be added to the root of the project, nor committed to git.
-
-## For Packagers: Publish this Package
-
-The example below shows the commands used to publish to bincrafters conan repository. To publish to your own conan respository (for example, after forking this git repository), you will need to change the commands below accordingly.
-
-## Build and package
-
-The following command both runs all the steps of the conan file, and publishes the package to the local system cache.  This includes downloading dependencies from "build_requires" and "requires" , and then running the build() method.
-
-    $ conan create bincrafters/stable
+*Note: You can click the "Set Me Up" button on the Bintray page above for instructions on using packages from this repository.*
 
 
+## Issues
 
-## Add Remote
+If you wish to report an issue or make a request for a Bincrafters package, please do so here:
 
-    $ conan remote add bincrafters "https://api.bintray.com/conan/bincrafters/public-conan"
-
-## Upload
-
-    $ conan upload soil2/1.11@bincrafters/stable --all -r bincrafters
+[Bincrafters Community Issues](https://github.com/bincrafters/community/issues)
 
 
-## Conan Recipe License
+## General Information
 
-NOTE: The conan recipe license applies only to the files of this recipe, which can be used to build and package soil2.
-It does *not* in any way apply or is related to the actual software being packaged.
+This git repository is managed by the Bincrafters team and holds files related to Conan.  For detailed information about Bincrafters and Conan, please visit the following resources:
 
-[MIT](https://github.com/Croydon/conan-soil2.git/blob/stable/1.11/LICENSE.md)
+[Conan Documentation](https://docs.conan.io)
+
+[Bincrafters Technical Documentation](http://bincrafters.readthedocs.io/en/latest/)
+
+[Bincrafters Blog](https://bincrafters.github.io)
+
+
+## License Information
+
+Bincrafters packages are hosted on [Bintray](https://bintray.com) and contain software which is licensed by the software's maintainers and NOT Bincrafters.
+
+The contents of this GIT repository are completely separate from the software being packaged and therefore licensed separately. The license for all files contained in this GIT repository are defined in the [LICENSE.md](LICENSE.md) file in this repository. The licenses included with all Conan packages published by Bincrafters can be found in the Conan package directories in the following locations, relative to the Conan Cache root (`~/.conan` by default):
+
+    ~/.conan/data/<pkg_name>/<pkg_version>/bincrafters/package/<random_package_id>/license/<LICENSE_FILES_HERE>
+
+*Note :   The most common filenames for OSS licenses are `LICENSE` AND `COPYING` without file extensions.*
