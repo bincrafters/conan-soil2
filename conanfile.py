@@ -9,12 +9,11 @@ class soil2Conan(ConanFile):
     url = "https://github.com/bincrafters/conan-soil2"
     homepage = "https://github.com/SpartanJ/SOIL2"
     author = "Inexor <info@inexor.org>"
-    license = "Unlicense"  # Public Domain
+    license = "MIT-0"
     settings = "os", "arch", "compiler", "build_type"
     _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
     generators = "premake"
-    exports_sources = ["premake5.lua"]
 
     def config_options(self):
         # Visual Studio users: SOIL2 will need to be compiled as C++ source ( at least the file etc1_utils.c ), since VC compiler doesn't support C99
@@ -33,8 +32,6 @@ class soil2Conan(ConanFile):
         tools.get(**self.conan_data["sources"][self.version])
         extracted_dir = "SOIL2-release-" + self.version
         os.rename(extracted_dir, self._source_subfolder)
-        # This is the upstream premake5.lua file which will be included in  a 1.11+ release
-        os.rename("premake5.lua", os.path.join(self._source_subfolder, "premake5.lua"))
 
     def system_requirements(self):
         if self.settings.os == "Macos":
@@ -61,6 +58,7 @@ class soil2Conan(ConanFile):
                     env_build.make(args=["soil2-static-lib", "config={}".format(config + "_" + architecture) ])
 
     def package(self):
+        self.copy(pattern="LICENSE", dst="licenses", src=self._source_subfolder)
         self.copy("*.h", dst="include/SOIL2", src="{}/src/SOIL2/".format(self._source_subfolder))
         self.copy(pattern="*.lib", dst="lib", keep_path=False)
         self.copy(pattern="*.a", dst="lib", keep_path=False)
