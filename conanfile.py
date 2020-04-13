@@ -25,8 +25,7 @@ class soil2Conan(ConanFile):
             self.build_requires("premake/5.0.0-alpha14")
     
     def requirements(self):
-        if self.settings.os == "Linux" and tools.os_info.is_linux:
-            self.requires("mesa/19.3.1@bincrafters/stable")
+        self.requires("opengl/virtual@bincrafters/stable")
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version])
@@ -65,7 +64,5 @@ class soil2Conan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = ["soil2-debug" if self.settings.build_type == "Debug" else "soil2"]
-        if self.settings.os == "Windows":
-            self.cpp_info.system_libs.extend(["glu32", "opengl32"])
-        elif self.settings.os == "Macos":
-            self.cpp_info.frameworks.extend(["OpenGL", "CoreFoundation"])
+        if self.settings.os == "Macos":
+            self.cpp_info.frameworks.extend(["CoreFoundation"])
