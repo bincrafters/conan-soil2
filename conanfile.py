@@ -25,7 +25,7 @@ class soil2Conan(ConanFile):
             self.build_requires("premake/5.0.0-alpha14")
     
     def requirements(self):
-        self.requires("opengl/virtual@bincrafters/stable")
+        self.requires("opengl/system")
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version])
