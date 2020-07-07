@@ -32,10 +32,6 @@ class soil2Conan(ConanFile):
         extracted_dir = "SOIL2-release-" + self.version
         os.rename(extracted_dir, self._source_subfolder)
 
-    def system_requirements(self):
-        if self.settings.os == "Macos":
-            self.run("brew cask install xquartz")
-
     def build(self):
         config = "debug" if self.settings.build_type == "Debug" else "release"
         architecture = "x86" if self.settings.arch == "x86" else "x86_64"
