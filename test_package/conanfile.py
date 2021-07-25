@@ -5,7 +5,7 @@ import os
 class TestPackageConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
-    requires = "glfw/3.3.2"
+    requires = "glfw/3.3.4"
 
     def build(self):
         cmake = CMake(self)
